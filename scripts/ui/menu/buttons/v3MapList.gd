@@ -4,7 +4,7 @@ signal search_updated
 signal reset_filters
 signal lock_type
 
-var thread:Thread
+var thread:Thread = null
 
 var songs:Array = Rhythia.registry_song.get_items()
 var btns:Array = []
@@ -226,7 +226,7 @@ func build_list():
 		append_filtering_favorites(disp,amogus)
 		append_filtering_favorites(disp,unknown)
 
-func reload_to_current_page(_a=null):
+func reload_to_current_page():
 	scrolling_to = false
 	build_list()
 	load_pg()
@@ -424,6 +424,7 @@ func handle_window_resize():
 
 func firstload():
 #	if the button is held down, it will keep scrolling
+	if !visible: return
 	get_parent().get_parent().get_parent().get_node("ScrollControl/P").connect("button_down",self,"pg_down_cont")
 	get_parent().get_parent().get_parent().get_node("ScrollControl/M").connect("button_down",self,"pg_up_cont")
 	get_parent().get_parent().get_parent().get_node("ScrollControl/P").connect("button_up",self,"pg_down_stop")
@@ -486,7 +487,9 @@ func _ready():
 	print("size_x: ", size_x)
 
 func _exit_tree():
-	thread.wait_to_finish()
+	if thread:
+		thread.wait_to_finish()
+		thread = null
 
 func size_list():
 	size_x = get_viewport_rect().size.x/2.8

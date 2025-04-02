@@ -1,5 +1,5 @@
 extends Control
-
+var _search_node: Node = null
 func comma_sep(number):
 	var string = str(number)
 	var mod = string.length() % 3
@@ -119,6 +119,19 @@ func show_pb(_s=null):
 			$MaxCombo.text = "-\n"
 
 func _ready():
+	var scene_root = get_tree().get_root()
+	if Rhythia.vr:
+		var viewport = scene_root.get_node("VRMenuHolder/PointerScreen/Viewport")
+		if viewport:
+			_search_node = viewport.get_node("Menu/Main/Maps/MapRegistry/S/VBoxContainer")
+		else:
+			push_error("Could not find Viewport node!")
+			return
+	else:
+		_search_node = scene_root.get_node("Menu/Main/Maps/MapRegistry/S/VBoxContainer")
+	if not _search_node:
+	 push_error("Could not find VBoxContainer node!")
+	 return
 	Rhythia.connect("selected_song_changed",self,"show_pb")
 	Rhythia.connect("mods_changed",self,"show_pb")
 	yield(Rhythia,"map_list_ready")
@@ -164,11 +177,18 @@ func _ready():
 		else:
 			$MaxCombo.text = "NO COMBO"
 		$MaxCombo.text += "\n"
-		
+		if _search_node.has_method("switch_to_play_screen"):
+		 _search_node.switch_to_play_screen()
+		else:
+		 push_error("VBoxContainer node found but missing switch_to_play_screen method!")
 		update_letter_grade(float(Rhythia.song_end_hits)/float(Rhythia.song_end_total_notes))
 		$Progress.text = "%s\n%.1f%%" % [Rhythia.song_end_time_str,clamp(Rhythia.song_end_position/Rhythia.song_end_length,0,1)*100]
 	else:
 		show_pb()
 	Rhythia.just_ended_song = false
-	var list = $"/root/Menu/Main/Maps/MapRegistry/S/VBoxContainer"
+	var list
+	if !Rhythia.vr:
+		list = $"/root/Menu/Main/Maps/MapRegistry/S/VBoxContainer"
+	else:
+		list = $"/root/VRMenuHolder/PointerScreen/Viewport/Menu/Main/Maps/MapRegistry/S/VBoxContainer"
 	list.switch_to_play_screen()

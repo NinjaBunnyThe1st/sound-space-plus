@@ -4,7 +4,7 @@ var leaving:bool = false
 
 var target:String = "res://scenes/song.tscn"
 var target2:String = Rhythia.selected_space.path
-
+var videotarg:String = ""
 var black_fade_target:bool = false
 var black_fade:float = 0
 
@@ -13,7 +13,7 @@ func _ready():
 	print("song loading")
 	get_tree().paused = false
 	if Rhythia.vr:
-		Rhythia.vr_player.transform.origin = Vector3(0,-2.5,4.5)
+		Rhythia.vr_player.transform.origin = Vector3(0,-2.5,4.5) # "What?" - chomik of babel
 	$BlackFade.visible = true
 	black_fade = 1
 	$BlackFade.color = Color(0,0,0,black_fade)
@@ -138,20 +138,6 @@ func finish():
 				Globals.confirm_prompt.s_next.play()
 				yield(Globals.confirm_prompt,"done_closing")
 		
-		if Rhythia.get("approach_rate") <= 0:
-			Globals.confirm_prompt.open(
-				"You are using a non-standard approach rate. Some things might not work correctly.",
-				"Warning",
-				[{text="Return to menu"},{text="Continue"}]
-			)
-			var option = yield(Globals.confirm_prompt,"option_selected")
-			Globals.confirm_prompt.close()
-			if option == 0:
-				warning_menu_exit()
-				return
-			else:
-				Globals.confirm_prompt.s_next.play()
-				yield(Globals.confirm_prompt,"done_closing")
 		
 		if Rhythia.hitwindow_ms <= 18:
 			Globals.confirm_prompt.open(

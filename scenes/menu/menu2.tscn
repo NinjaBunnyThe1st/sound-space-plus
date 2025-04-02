@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=2]
+[gd_scene load_steps=207 format=2]
 
 [ext_resource path="res://uitheme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/font/Lato/Lato-Regular.ttf" type="DynamicFontData" id=2]
@@ -46,6 +46,7 @@
 [ext_resource path="res://scripts/ui/menu/buttons/SuddenDeath.gd" type="Script" id=44]
 [ext_resource path="res://scripts/ui/menu/buttons/Ghost.gd" type="Script" id=45]
 [ext_resource path="res://scripts/ui/menu/rainbow.gd" type="Script" id=46]
+[ext_resource path="res://assets/images/ui/vrlogo.png" type="Texture" id=47]
 [ext_resource path="res://scripts/ui/menu/buttons/PatreonCredits.gd" type="Script" id=48]
 [ext_resource path="res://prefabs/menu/settings_page.tscn" type="PackedScene" id=49]
 [ext_resource path="res://assets/font/UbuntuMono/Regular.ttf" type="DynamicFontData" id=50]
@@ -59,7 +60,6 @@
 [ext_resource path="res://scripts/ui/menu/buttons/ExportTxt.gd" type="Script" id=58]
 [ext_resource path="res://scripts/ui/menu/StartOffset.gd" type="Script" id=59]
 [ext_resource path="res://scripts/ui/menu/buttons/ModChaos.gd" type="Script" id=60]
-[ext_resource path="res://assets/images/ui/placeholder.jpg" type="Texture" id=61]
 [ext_resource path="res://scripts/ui/menu/GradeSystem.gd" type="Script" id=62]
 [ext_resource path="res://scripts/ui/menu/buttons/VisualMode.gd" type="Script" id=63]
 [ext_resource path="res://assets/sfx/beep.wav" type="AudioStream" id=64]
@@ -557,6 +557,8 @@ outline_color = Color( 0, 0, 0, 0.207843 )
 use_filter = true
 font_data = ExtResource( 14 )
 
+[sub_resource type="ButtonGroup" id=177]
+
 [sub_resource type="DynamicFont" id=68]
 outline_size = 1
 outline_color = Color( 0, 0, 0, 0.207843 )
@@ -743,7 +745,7 @@ script = ExtResource( 28 )
 
 [node name="Actions" type="VBoxContainer" parent="Main/Maps/Results/Results"]
 visible = false
-margin_right = 225.0
+margin_right = 636.0
 margin_bottom = 89.0
 theme = ExtResource( 1 )
 __meta__ = {
@@ -751,7 +753,7 @@ __meta__ = {
 }
 
 [node name="Convert" type="Button" parent="Main/Maps/Results/Results/Actions"]
-margin_right = 225.0
+margin_right = 636.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 225, 27 )
 theme = ExtResource( 1 )
@@ -762,7 +764,7 @@ script = ExtResource( 39 )
 
 [node name="Difficulty" type="OptionButton" parent="Main/Maps/Results/Results/Actions"]
 margin_top = 31.0
-margin_right = 225.0
+margin_right = 636.0
 margin_bottom = 58.0
 rect_min_size = Vector2( 225, 27 )
 theme = ExtResource( 1 )
@@ -772,7 +774,7 @@ script = ExtResource( 40 )
 
 [node name="ExportTxt" type="Button" parent="Main/Maps/Results/Results/Actions"]
 margin_top = 62.0
-margin_right = 225.0
+margin_right = 636.0
 margin_bottom = 89.0
 rect_min_size = Vector2( 225, 27 )
 theme = ExtResource( 1 )
@@ -2951,11 +2953,13 @@ size_flags_stretch_ratio = 2.0
 
 [node name="Deleted" type="CenterContainer" parent="Main/Maps/Results/Results"]
 visible = false
-margin_right = 294.0
-margin_bottom = 158.0
+margin_top = 706.0
+margin_right = 636.0
+margin_bottom = 864.0
 
 [node name="Text" type="Label" parent="Main/Maps/Results/Results/Deleted"]
-margin_right = 294.0
+margin_left = 171.0
+margin_right = 465.0
 margin_bottom = 158.0
 custom_colors/font_color = Color( 0.956863, 0.729412, 0.537255, 1 )
 text = "The selected map has been deleted.
@@ -2991,7 +2995,7 @@ size_flags_stretch_ratio = 0.45
 
 [node name="MapRegistry" type="VBoxContainer" parent="Main/Maps"]
 margin_left = 659.0
-margin_right = 1072.0
+margin_right = 1095.0
 margin_bottom = 742.0
 grow_horizontal = 0
 rect_clip_content = true
@@ -3000,7 +3004,7 @@ size_flags_vertical = 3
 alignment = 2
 
 [node name="T" type="HBoxContainer" parent="Main/Maps/MapRegistry"]
-margin_right = 413.0
+margin_right = 436.0
 margin_bottom = 50.0
 grow_horizontal = 0
 rect_min_size = Vector2( 0, 50 )
@@ -3010,14 +3014,14 @@ custom_constants/separation = 7
 
 [node name="VSeparator" type="VSeparator" parent="Main/Maps/MapRegistry/T"]
 modulate = Color( 1, 1, 1, 0 )
-margin_right = 52.0
+margin_right = 58.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 
 [node name="Search" type="LineEdit" parent="Main/Maps/MapRegistry/T"]
-margin_left = 59.0
+margin_left = 65.0
 margin_top = 11.0
-margin_right = 164.0
+margin_right = 181.0
 margin_bottom = 39.0
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -3030,22 +3034,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AuthorSearch" type="LineEdit" parent="Main/Maps/MapRegistry/T"]
-margin_left = 171.0
-margin_top = 11.0
-margin_right = 224.0
-margin_bottom = 39.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme = ExtResource( 1 )
-clear_button_enabled = true
-placeholder_text = "Author"
-script = ExtResource( 91 )
-
 [node name="Random" type="Button" parent="Main/Maps/MapRegistry/T"]
-margin_left = 231.0
+margin_left = 188.0
 margin_top = 10.0
-margin_right = 413.0
+margin_right = 370.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
@@ -3054,9 +3046,21 @@ theme = ExtResource( 1 )
 action_mode = 0
 text = "Select random from search"
 
+[node name="AuthorSearch" type="LineEdit" parent="Main/Maps/MapRegistry/T"]
+margin_left = 377.0
+margin_top = 11.0
+margin_right = 436.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+clear_button_enabled = true
+placeholder_text = "Author"
+script = ExtResource( 91 )
+
 [node name="S" type="Control" parent="Main/Maps/MapRegistry"]
 margin_top = 54.0
-margin_right = 413.0
+margin_right = 436.0
 margin_bottom = 742.0
 grow_vertical = 2
 rect_min_size = Vector2( 340, 688 )
@@ -3822,8 +3826,8 @@ volume_db = -16.0
 pitch_scale = 1.25
 
 [node name="ScrollControl" type="VBoxContainer" parent="Main/Maps"]
-margin_left = 1076.0
-margin_right = 1116.0
+margin_left = 1099.0
+margin_right = 1139.0
 margin_bottom = 742.0
 
 [node name="bump" type="Button" parent="Main/Maps/ScrollControl"]
@@ -3894,19 +3898,12 @@ align = 1
 valign = 1
 clip_text = true
 
-[node name="VSeparator2" type="VSeparator" parent="Main/Maps"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 1120.0
-margin_right = 1125.0
-margin_bottom = 742.0
-custom_constants/separation = 5
-
 [node name="Filters" type="VBoxContainer" parent="Main/Maps"]
-margin_left = 1129.0
-margin_right = 1206.0
+margin_left = 1143.0
+margin_right = 1220.0
 margin_bottom = 742.0
 size_flags_horizontal = 5
-size_flags_vertical = 3
+size_flags_vertical = 5
 custom_constants/separation = 7
 script = ExtResource( 20 )
 
@@ -4066,7 +4063,7 @@ custom_styles/focus = SubResource( 64 )
 custom_styles/disabled = SubResource( 65 )
 custom_styles/normal = SubResource( 66 )
 action_mode = 0
-group = SubResource( 67 )
+group = SubResource( 177 )
 
 [node name="EASY" type="Panel" parent="Main/Maps/Filters"]
 self_modulate = Color( 0, 1, 0, 1 )
@@ -4173,9 +4170,6 @@ custom_styles/disabled = SubResource( 65 )
 custom_styles/normal = SubResource( 66 )
 action_mode = 0
 group = SubResource( 67 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HARD" type="Panel" parent="Main/Maps/Filters"]
 self_modulate = Color( 1, 0, 0, 1 )
@@ -4288,9 +4282,6 @@ custom_styles/disabled = SubResource( 65 )
 custom_styles/normal = SubResource( 66 )
 action_mode = 0
 group = SubResource( 67 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AMOGUS" type="Panel" parent="Main/Maps/Filters"]
 self_modulate = Color( 0.211765, 0.188235, 0.309804, 1 )
@@ -4345,13 +4336,6 @@ custom_styles/disabled = SubResource( 65 )
 custom_styles/normal = SubResource( 66 )
 action_mode = 0
 group = SubResource( 67 )
-
-[node name="VSeparator3" type="VSeparator" parent="Main/Maps"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 1210.0
-margin_right = 1220.0
-margin_bottom = 742.0
-custom_constants/separation = 10
 
 [node name="Settings" type="ReferenceRect" parent="Main"]
 visible = false
@@ -4466,7 +4450,6 @@ text = "Add Songs"
 script = ExtResource( 8 )
 
 [node name="SidebarClick" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 1, 1, 1, 0 )
@@ -4478,9 +4461,6 @@ rect_min_size = Vector2( 60, 0 )
 rect_clip_content = true
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 12 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="L" type="VBoxContainer" parent="Sidebar"]
 anchor_right = 1.0
@@ -4519,7 +4499,6 @@ text = "Play Song"
 valign = 1
 
 [node name="MapSelect" type="Button" parent="Sidebar/L"]
-visible = false
 margin_top = 58.0
 margin_right = 58.0
 margin_bottom = 116.0
@@ -4530,7 +4509,6 @@ custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 4 )
 toggle_mode = true
-pressed = true
 action_mode = 0
 group = SubResource( 5 )
 
@@ -4552,9 +4530,9 @@ text = "Song Select"
 valign = 1
 
 [node name="Settings" type="Button" parent="Sidebar/L"]
-margin_top = 58.0
+margin_top = 116.0
 margin_right = 58.0
-margin_bottom = 116.0
+margin_bottom = 174.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )
@@ -4583,9 +4561,9 @@ text = "Settings"
 valign = 1
 
 [node name="Credits" type="Button" parent="Sidebar/L"]
-margin_top = 116.0
+margin_top = 174.0
 margin_right = 58.0
-margin_bottom = 174.0
+margin_bottom = 232.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )
@@ -4614,9 +4592,9 @@ text = "Credits"
 valign = 1
 
 [node name="ContentMgr" type="Button" parent="Sidebar/L"]
-margin_top = 174.0
+margin_top = 232.0
 margin_right = 58.0
-margin_bottom = 232.0
+margin_bottom = 290.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )
@@ -4645,9 +4623,9 @@ text = "Content Manager"
 valign = 1
 
 [node name="Language" type="Button" parent="Sidebar/L"]
-margin_top = 232.0
+margin_top = 290.0
 margin_right = 58.0
-margin_bottom = 290.0
+margin_bottom = 348.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )
@@ -4676,10 +4654,9 @@ text = "Language"
 valign = 1
 
 [node name="StartVR" type="Button" parent="Sidebar/L"]
-visible = false
-margin_top = 290.0
+margin_top = 348.0
 margin_right = 58.0
-margin_bottom = 348.0
+margin_bottom = 406.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )
@@ -4695,7 +4672,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 48.0
 margin_bottom = 48.0
-texture = ExtResource( 61 )
+texture = ExtResource( 47 )
 expand = true
 stretch_mode = 6
 
@@ -4740,9 +4717,9 @@ text = "Switch to Old Menu"
 valign = 1
 
 [node name="Quit" type="Button" parent="Sidebar/L"]
-margin_top = 290.0
+margin_top = 406.0
 margin_right = 58.0
-margin_bottom = 348.0
+margin_bottom = 464.0
 rect_min_size = Vector2( 0, 58 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 2 )

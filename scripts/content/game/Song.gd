@@ -1430,6 +1430,7 @@ func load_from_sspm(path:String):
 		if file.get_16() != 0: return "Header reserved space is invalid (modded map?)"
 		
 		id = file.get_line()
+		
 		name = file.get_line()
 		song = name
 		creator = file.get_line()

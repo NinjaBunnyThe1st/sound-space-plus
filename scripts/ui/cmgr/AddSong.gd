@@ -15,12 +15,13 @@ var path:String = ""
 var musicPath:String = ""
 var dataPath:String = ""
 var difficulty_id:int = -1
-
+var vidfi:String = ""
 enum {
 	T_TXT
 	T_SSPM
 	T_VULNUS
 	T_SSPMR
+	T_OGV
 }
 enum {
 	F_DIR
@@ -33,6 +34,7 @@ enum {
 	FO_SSPM
 	FO_TXT
 	FO_SONG
+	FO_VIDEO
 }
 
 var txt_using_manual_id:bool = false
@@ -170,6 +172,18 @@ func select_type(type:int):
 		step = 1
 		$SelectType.visible = false
 		$TxtFile.visible = true
+	elif type == T_OGV:
+		opening = FO_VIDEO
+		Globals.file_sel.open_file(
+			self,
+			"file_selected",
+			PoolStringArray(["*.ogv ; Ogv Video File"]),
+			false,
+			#"~/Downloads"
+			OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+		)
+		$SelectType.visible = false
+		$AssignVid.visible = true
 
 func sel_filetype(type:int):
 	print(type)
@@ -665,7 +679,31 @@ func file_selected(files:PoolStringArray):
 				if !(stream is AudioStreamSample): stream.loop = true
 				$TxtFile/H/audio/player.stream = stream
 			check_txt_requirements()
+		FO_VIDEO:
+			vidfi = files[0]
 
+func assign_vid():
+	var target_dir = "user://videos/"
+	var dir = Directory.new()
+	if !dir.dir_exists(target_dir):
+		dir.make_dir_recursive(target_dir) 
+	var target_filename = $AssignVid/TextEdit.text
+	if target_filename.empty():
+		printerr("Filename cannot be empty!")
+		return
+	var ogv_path = target_dir + target_filename + ".ogv"
+	var source_file = File.new()
+	source_file.open(Globals.p(vidfi), File.READ)
+	var text_bytes = source_file.get_buffer(source_file.get_len())
+	source_file.close()
+	var dest_file = File.new()
+	dest_file.open(ogv_path, File.WRITE)
+	dest_file.store_buffer(text_bytes) 
+	dest_file.close()
+	file.close()
+	var list = $"/root/Menu/Main/Maps/MapRegistry/S/VBoxContainer"
+	list.prepare_songs()
+	list.reload_to_current_page()
 func folder_selected(path:String):
 	if path != "": file_selected(PoolStringArray([path]))
 
@@ -857,6 +895,7 @@ func _ready():
 	$SelectType/vulnus.connect("pressed",self,"select_type",[T_VULNUS])
 	$SelectType/sspmr.connect("pressed",self,"select_type",[T_SSPMR])
 	$SelectType/cancel.connect("pressed",self,"back_to_menu")
+	$SelectType/video.connect("pressed",self,"select_type",[T_OGV])
 	
 	$VulnusFile/zip.connect("pressed",self,"sel_filetype",[F_ZIP])
 	$VulnusFile/folder.connect("pressed",self,"sel_filetype",[F_DIR])
@@ -886,6 +925,7 @@ func _ready():
 	$Edit/Info/Id/T.connect("focus_exited",self,"edit_field",["id",true])
 	
 	$Edit/done.connect("pressed",self,"finish_map")
+	$AssignVid/done.connect("pressed",self,"assign_vid")
 	
 	$TxtFile/H/E/Cover/T/B.connect("pressed",self,"do_coversel")
 	$TxtFile/H/E/Cover/C.connect("toggled",self,"set_use_cover")

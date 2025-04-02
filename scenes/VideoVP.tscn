@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="VideoVP" type="Viewport"]
+size = Vector2( 512, 512 )
+
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
+margin_right = 480.0
+margin_bottom = 360.0

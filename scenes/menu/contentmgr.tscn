@@ -353,6 +353,48 @@ text = "Return to menu"
 align = 1
 valign = 1
 
+[node name="video" type="Button" parent="AddSong/SelectType"]
+modulate = Color( 0.5, 0.5, 0.5, 1 )
+anchor_right = 1.0
+margin_left = 15.0
+margin_top = 310.0
+margin_right = -15.0
+margin_bottom = 380.0
+custom_styles/hover = SubResource( 75 )
+custom_styles/pressed = SubResource( 75 )
+custom_styles/focus = SubResource( 76 )
+custom_styles/disabled = SubResource( 73 )
+custom_styles/normal = SubResource( 73 )
+action_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="AddSong/SelectType/video"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 52.0
+margin_bottom = 52.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="AddSong/SelectType/video"]
+anchor_right = 1.0
+margin_left = 60.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 77 )
+text = "Assgin Video to Song"
+valign = 2
+
+[node name="Describe" type="Label" parent="AddSong/SelectType/video"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 60.0
+margin_top = 22.0
+custom_colors/font_color = Color( 0.784314, 0.827451, 0.866667, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+custom_fonts/font = SubResource( 78 )
+text = "Requires a folder containing a .ogv file (NOT .mp4!!!!)  "
+clip_text = true
+
 [node name="VulnusFile" type="ReferenceRect" parent="AddSong"]
 visible = false
 anchor_right = 1.0
@@ -458,6 +500,7 @@ align = 1
 valign = 1
 
 [node name="SelectDifficulty" type="ReferenceRect" parent="AddSong"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 35.0
@@ -1365,6 +1408,77 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 77 )
 text = "Import another map"
+align = 1
+valign = 1
+
+[node name="AssignVid" type="ReferenceRect" parent="AddSong"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 35.0
+focus_mode = 1
+border_color = Color( 1, 0, 0, 0 )
+
+[node name="done" type="Button" parent="AddSong/AssignVid"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = -50.0
+margin_right = -45.0
+margin_bottom = -15.0
+custom_styles/hover = SubResource( 75 )
+custom_styles/pressed = SubResource( 75 )
+custom_styles/focus = SubResource( 76 )
+custom_styles/disabled = SubResource( 74 )
+custom_styles/normal = SubResource( 73 )
+action_mode = 0
+
+[node name="Title" type="Label" parent="AddSong/AssignVid/done"]
+modulate = Color( 0.580392, 0.937255, 0.505882, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 77 )
+text = "Finish"
+align = 1
+valign = 1
+
+[node name="cancel" type="Button" parent="AddSong/AssignVid"]
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 45.0
+margin_top = -50.0
+margin_right = -5.0
+margin_bottom = -15.0
+custom_styles/hover = SubResource( 75 )
+custom_styles/pressed = SubResource( 75 )
+custom_styles/focus = SubResource( 76 )
+custom_styles/disabled = SubResource( 74 )
+custom_styles/normal = SubResource( 73 )
+action_mode = 0
+
+[node name="Title" type="Label" parent="AddSong/AssignVid/cancel"]
+modulate = Color( 1, 0.494118, 0.494118, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 77 )
+text = "Back"
+align = 1
+valign = 1
+
+[node name="TextEdit" type="TextEdit" parent="AddSong/AssignVid"]
+margin_left = 42.0
+margin_top = 269.0
+margin_right = 384.0
+margin_bottom = 304.0
+
+[node name="Label" type="Label" parent="AddSong/AssignVid"]
+margin_left = 132.0
+margin_top = 202.0
+margin_right = 279.0
+margin_bottom = 245.0
+text = "Assign .ogv to...."
 align = 1
 valign = 1
 
