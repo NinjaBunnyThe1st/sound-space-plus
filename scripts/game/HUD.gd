@@ -6,6 +6,7 @@ onready var Spawn:NoteManager = get_parent().get_node("Spawn")
 
 
 onready var timebar:ProgressBar = get_node("TimerVP/Control/Time")
+onready var video:VideoPlayer = get_node("VideoVP/VideoPlayer")
 onready var timelabel:Label = get_node("TimerVP/Control/Label")
 onready var songnametxt:Label = get_node("TimerVP/Control/SongName")
 onready var acclabel:Label = get_node("LeftVP/Control/Accuracy")
@@ -94,6 +95,8 @@ var gtimer:float = 0 # global delta timer
 var s_curspd:float = 0
 var s_tcurspd:float = 0
 var calculating:bool = false
+
+var chess:bool = false
 
 
 func set_song_name(name:String=Rhythia.selected_song.name):
@@ -217,7 +220,10 @@ func update_timer(ms:float,canSkip:bool=false):
 				paint(n,timer_text)
 	
 	timebar.value = (clamp(qms/lms,0,1)) 
-	if canSkip: timelabel.text = "PRESS SPACE TO SKIP"
+	
+	if canSkip: 
+		if !Rhythia.vr: timelabel.text = "PRESS SPACE TO SKIP" 
+		else: timelabel.text = "PRESS VR GRIP TO SKIP"
 	elif canSkip and OS.has_feature("Android"): timelabel.text = "TAP TO SKIP"
 	else: timelabel.text = "%d:%02d / %d:%02d" % [m,rs,lm,lrs]
 	Rhythia.song_end_time_str = "%d:%02d" % [m,rs]
@@ -298,7 +304,11 @@ func _process(delta:float):
 		$LeftHud.modulate = Color.from_hsv(Rhythia.rainbow_t*0.1,0.4,1)
 		$RightHud.modulate = Color.from_hsv(Rhythia.rainbow_t*0.1,0.4,1)
 	
+	
 	if Spawn.pause_state != 0:
+		if !chess:
+			video.paused = true
+			chess = true
 		$PauseHud.visible = !Input.is_key_pressed(KEY_C)
 		$PauseVP/Control.percent = clamp(
 			1 - (Spawn.pause_state),
@@ -307,6 +317,10 @@ func _process(delta:float):
 		)
 		$PauseHud.modulate = Color(1,1,1,abs(Spawn.pause_state) * pause_ui_opacity)
 	else:
+		if chess:
+			video.paused = false
+			chess = false
+			print(chess)
 		$PauseHud.visible = false
 	
 	# stat mod

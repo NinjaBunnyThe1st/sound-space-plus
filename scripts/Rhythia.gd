@@ -1,6 +1,7 @@
 extends Node
 
 onready var rootg = get_tree().root
+#Nodes
 
 # Signals
 signal mods_changed
@@ -50,6 +51,7 @@ var selected_song:Song
 var selected_mesh:NoteMesh
 var selected_hit_effect:NoteEffect
 var selected_miss_effect:NoteEffect
+
 # Selectors
 func select_colorset(set:ColorSet):
 	if set:
@@ -212,33 +214,56 @@ var expand_hud_onhr:bool = false
 
 # VR startup
 func start_vr():
+	# Check if VR is already active
 	if vr:
 		print("VR already active")
 		return
+	
 	print("VR START")
 	vr = true
 	
-	get_viewport().hdr = false
-	OS.vsync_enabled = false
-	Engine.target_fps = 90
 	
+	# Configure viewport and performance settings
+	var viewport = get_viewport()
+	viewport.hdr = false
+	OS.vsync_enabled = false
+	Engine.target_fps = 120
+	
+	# Handle fake VR mode
 	if Input.is_key_pressed(KEY_SHIFT):
-		print("enabling fake vr")
+		print("Enabling fake VR")
 		OS.window_maximized = true
 		fake_vr = true
 		
+		# Set up keyboard bindings for fake VR
 		var ev = InputEventKey.new()
 		ev.scancode = KEY_F
-		InputMap.action_add_event("vr_switch_hands",ev)
+		InputMap.action_add_event("vr_switch_hands", ev)
 		
 		ev = InputEventMouseButton.new()
 		ev.button_index = BUTTON_LEFT
-		InputMap.action_add_event("vr_click",ev)
+		InputMap.action_add_event("vr_click", ev)
 	else:
-		vr_interface.initialize()
-		get_viewport().arvr = true
-		
-		# Hand switch binds
+		# Initialize proper VR mode
+		if !vr_interface.initialize():
+			print("Failed to initialize VR!")
+			return
+			
+		viewport.arvr = true
+		# Set up VR controller bindings
+		setup_controller_bindings()
+	
+	# Load VR player and transition to menu
+	var vr_av = load("res://vr/VRPlayer.tscn").instance()
+	rootg.add_child(vr_av)
+	vr_av.name = "VRPlayer"
+	vr_player = vr_av
+	
+	menu_target = "res://vr/vrmenu.tscn"
+	get_tree().change_scene("res://scenes/loaders/menuload.tscn")
+
+func setup_controller_bindings():
+	# Hand switch binds
 		var ev = InputEventJoypadButton.new()
 		ev.button_index = JOY_OCULUS_MENU
 		InputMap.action_add_event("vr_switch_hands",ev)
@@ -258,37 +283,32 @@ func start_vr():
 		
 		# Pause binds
 		ev = InputEventJoypadButton.new()
-		ev.button_index = JOY_VR_TRIGGER
+		ev.button_index = JOY_VR_PAD
 		InputMap.action_add_event("pause",ev)
 		
 		ev = InputEventJoypadButton.new()
 		ev.button_index = JOY_OCULUS_BY
 		InputMap.action_add_event("pause",ev)
 		
-		ev = InputEventJoypadMotion.new()
-		ev.axis = JOY_VR_ANALOG_TRIGGER
-		InputMap.action_add_event("pause",ev)
 		
 		# Click binds
-		ev = InputEventJoypadButton.new()
-		ev.button_index = JOY_VR_TRIGGER
-		InputMap.action_add_event("vr_click",ev)
 		
-		ev = InputEventJoypadButton.new()
-		ev.button_index = JOY_OCULUS_AX
-		InputMap.action_add_event("vr_click",ev)
+		
 		
 		ev = InputEventJoypadMotion.new()
-		ev.axis = JOY_VR_ANALOG_TRIGGER
+		ev.axis = 2
 		InputMap.action_add_event("vr_click",ev)
+		ev = InputEventJoypadMotion.new()
+		ev.axis = 4
+		InputMap.action_add_event("vr_click",ev)
+		print(JOY_VR_ANALOG_TRIGGER)
+		
+		ev = InputEventJoypadButton.new()
+		ev.button_index = 15
+		InputMap.action_add_event("vr_click",ev)
+		
 	
-	var vr_av:VRPlayer = load("res://vr/VRPlayer.tscn").instance()
-	rootg.add_child(vr_av)
-	vr_av.name = "VRPlayer"
-	vr_player = vr_av
-	
-	menu_target = "res://vr/vrmenu.tscn"
-	get_tree().change_scene("res://scenes/loaders/menuload.tscn")
+		# Add remaining bindings...If any...
 
 # Song queue
 func prepare_queue():
@@ -396,6 +416,23 @@ func console_cmd_error(body:String):
 	yield(Globals.confirm_prompt,"option_selected")
 	Globals.confirm_prompt.s_back.play()
 	Globals.confirm_prompt.close()
+func change_video():
+	if selected_song == null: return
+	var hud: Sprite3D = get_node("/root/Song/Game/HUD/VideoHud")
+	var video: VideoPlayer = get_node("/root/Song/Game/HUD/VideoVP/VideoPlayer")
+	if !video:
+		printerr("Could not find VideoPlayer node!")
+		return
+	print(selected_song.name)
+	var new_stream = load("user://videos/"+selected_song.name+".ogv")
+	if !new_stream:
+		printerr("Failed to load video stream!")
+		hud.visible = false
+		return
+	video.stream = new_stream
+	hud.visible = true
+	print("Current stream:", video.stream.get_name())
+	
 func update_rpc_song(): # Discord RPC
 	if !ProjectSettings.get_setting("application/config/discord_rpc") or selected_song == null: return
 	var txt = ""

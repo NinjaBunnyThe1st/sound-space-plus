@@ -10,13 +10,21 @@ func _input(event:InputEvent):
 	if active:
 		if event is InputEventKey:
 			viewport.input(event)
-		elif event.is_action("vr_click"):
-			var ev:InputEventMouseButton = InputEventMouseButton.new()
-			ev.position = last_screen_pos
-			ev.button_index = BUTTON_LEFT
-			ev.button_mask = BUTTON_MASK_LEFT
-			ev.pressed = Input.is_action_pressed("vr_click")
-			viewport.input(ev)
+		elif event is InputEventJoypadButton and (event as InputEventJoypadButton):
+			var e:InputEventJoypadButton = event
+			if e.button_index == 15:
+				var ev:InputEventMouseButton = InputEventMouseButton.new()
+				ev.position = last_screen_pos
+				ev.button_index = BUTTON_LEFT
+				ev.button_mask = BUTTON_MASK_LEFT
+				ev.pressed = event.is_pressed()
+				viewport.input(ev)
+	
+			
+		
+			
+	
+			
 
 func _process(delta):
 	active = (Rhythia.vr_player.primary_ray.is_colliding() and (Rhythia.vr_player.primary_ray.get_collider() == self))
@@ -34,9 +42,6 @@ func _process(delta):
 			round(percent.x * viewport.size.x),
 			round(percent.y * viewport.size.y)
 		)
-		
-		viewport.get_node("Label").text = "r: %s\np: %s\ns: %s" % [local_pos,percent,screen_pos]
-		
 		if screen_pos != last_screen_pos:
 			var ev:InputEventMouseMotion = InputEventMouseMotion.new()
 			var relative = screen_pos - last_screen_pos
@@ -81,3 +86,4 @@ func _ready():
 	var img2 = Globals.imageLoader.load_if_exists("user://trail")
 	if img2: $PointerTrail.draw_pass_1.material.albedo_texture = img2
 	elif img: $PointerTrail.draw_pass_1.material.albedo_texture = img
+	get_node("Viewport/Menu/Main/Maps/Filters").visible = false
