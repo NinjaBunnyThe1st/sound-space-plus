@@ -360,6 +360,7 @@ func _ready():
 	Game.connect("miss",self,"on_miss")
 	
 	$Stats/Label.visible = Rhythia.show_stats
+	$Screen.visible = Rhythia.vr
 	
 	$GiveUpVP/Control.fill_color = giveup_fill_color
 	

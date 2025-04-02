@@ -682,6 +682,7 @@ func file_selected(files:PoolStringArray):
 		FO_VIDEO:
 			vidfi = files[0]
 
+# Assign the video to the song name (By file name)
 func assign_vid():
 	var target_dir = "user://videos/"
 	var dir = Directory.new()
@@ -701,9 +702,10 @@ func assign_vid():
 	dest_file.store_buffer(text_bytes) 
 	dest_file.close()
 	file.close()
-	var list = $"/root/Menu/Main/Maps/MapRegistry/S/VBoxContainer"
-	list.prepare_songs()
-	list.reload_to_current_page()
+	Rhythia.conmgr_transit = null
+	get_tree().change_scene("res://scenes/loaders/menuload.tscn")
+
+	
 func folder_selected(path:String):
 	if path != "": file_selected(PoolStringArray([path]))
 
@@ -950,7 +952,7 @@ func _ready():
 	$VulnusFile/cancel.connect("pressed",self,"onopen")
 	$SelectDifficulty/cancel.connect("pressed",self,"onopen")
 	$Finish/ok.connect("pressed",self,"onopen")
-	
+	$AssignVid/cancel.connect("pressed",self,"onopen")
 #	call_deferred("add_child",openFile)
 #	call_deferred("add_child",openFolder)
 	call_deferred("onopen")
