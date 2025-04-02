@@ -9,7 +9,6 @@
 [ext_resource path="res://addons/native_dialogs/bin/native_dialog_open_file.gdns" type="Script" id=7]
 [ext_resource path="res://addons/native_dialogs/bin/native_dialog_save_file.gdns" type="Script" id=8]
 
-
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 

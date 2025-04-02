@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-a89ecb8be28ea6c50eeae0c3cb0cd271.stex"
+path="res://.import/vrlogo.png-9782f7b4301b9b180c1a7544999f666e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot-openvr/icon.png"
-dest_files=[ "res://.import/icon.png-a89ecb8be28ea6c50eeae0c3cb0cd271.stex" ]
+source_file="res://assets/images/ui/vrlogo.png"
+dest_files=[ "res://.import/vrlogo.png-9782f7b4301b9b180c1a7544999f666e.stex" ]
 
 [params]
 
