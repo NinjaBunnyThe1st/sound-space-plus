@@ -306,7 +306,7 @@ func _process(delta:float):
 	
 	
 	if Spawn.pause_state != 0:
-		if !playvid and Rhythia.mod_speed_level == Globals.SPEED_NORMAL:
+		if !playvid:
 			video.paused = true
 			playvid = true
 		$PauseHud.visible = !Input.is_key_pressed(KEY_C)
