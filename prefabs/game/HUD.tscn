@@ -1488,7 +1488,7 @@ skeleton = NodePath("")
 
 [node name="Label3D" type="Label3D" parent="Screen"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00517783, 0.00590992, 0.00543833 )
-text = "Warning: This is fixed version of the game. Original code by Laith \"pyrule\" Hijazi."
+text = "Warning: This is fixed version of VR code. Original VR code by Laith \"pyrule\" Hijazi."
 
 [node name="VideoVP" parent="." instance=ExtResource( 34 )]
 size = Vector2( 480, 360 )

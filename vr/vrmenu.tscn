@@ -125,7 +125,7 @@ skeleton = NodePath("")
 
 [node name="Label3D" type="Label3D" parent="Screen"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00517783, 0.00590992, 0.00543833 )
-text = "Warning: This is fixed version of the game. Original code by Laith \"pyrule\" Hijazi."
+text = "Warning: This is fixed version of the main VR code. Original VR code by Laith \"pyrule\" Hijazi."
 
 [node name="Pillers" type="Spatial" parent="."]
 transform = Transform( 3, 0, 0, 0, 5, 0, 0, 0, 3, 0.001, -5, -0.01 )
