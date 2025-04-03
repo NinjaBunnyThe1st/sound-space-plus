@@ -130,7 +130,7 @@ func end(end_type:int):
 		black_fade_target = true
 		yield(get_tree().create_timer(0.35),"timeout")
 		get_tree().change_scene("res://scenes/loaders/menuload.tscn")
-var quack:bool = Globals.quack
+var checkvid:bool = false
 func update_timer(ms:float,canSkip:bool=false):
 	var qms = ms + $Spawn.ms_offset
 	var lms = last_ms
@@ -146,12 +146,12 @@ func update_timer(ms:float,canSkip:bool=false):
 	var lm = floor(ls / 60)
 	var lrs = fmod(ls,60)
 	
-	if total_notes == 1 and !quack:
+	if total_notes == 1 and !checkvid:
 		Rhythia.change_video()
 		var video:VideoPlayer = get_node("/root/Song/Game/HUD/VideoVP/VideoPlayer")
 		video.volume = 0
 		video.play()
-		quack = true
+		checkvid = true
 	$HUD.update_timer(ms,canSkip)
 	
 	if Rhythia.queue_active:

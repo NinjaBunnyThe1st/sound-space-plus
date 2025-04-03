@@ -96,7 +96,7 @@ var s_curspd:float = 0
 var s_tcurspd:float = 0
 var calculating:bool = false
 
-var chess:bool = false
+var playvid:bool = false
 
 
 func set_song_name(name:String=Rhythia.selected_song.name):
@@ -306,9 +306,9 @@ func _process(delta:float):
 	
 	
 	if Spawn.pause_state != 0:
-		if !chess:
+		if !playvid and Rhythia.mod_speed_level == Globals.SPEED_NORMAL:
 			video.paused = true
-			chess = true
+			playvid = true
 		$PauseHud.visible = !Input.is_key_pressed(KEY_C)
 		$PauseVP/Control.percent = clamp(
 			1 - (Spawn.pause_state),
@@ -317,10 +317,10 @@ func _process(delta:float):
 		)
 		$PauseHud.modulate = Color(1,1,1,abs(Spawn.pause_state) * pause_ui_opacity)
 	else:
-		if chess:
+		if playvid:
 			video.paused = false
-			chess = false
-			print(chess)
+			playvid = false
+			print(playvid)
 		$PauseHud.visible = false
 	
 	# stat mod

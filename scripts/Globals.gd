@@ -1,7 +1,7 @@
 extends Node
 
 onready var rootg = get_tree().root
-onready var quack:bool = false
+
 enum {
 	CAMERA_HALF_LOCK
 	CAMERA_FULL_LOCK
