@@ -145,7 +145,6 @@ align = 1
 valign = 1
 
 [node name="SelectType" type="ReferenceRect" parent="AddSong"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 35.0
@@ -354,7 +353,6 @@ align = 1
 valign = 1
 
 [node name="video" type="Button" parent="AddSong/SelectType"]
-modulate = Color( 0.5, 0.5, 0.5, 1 )
 anchor_right = 1.0
 margin_left = 15.0
 margin_top = 310.0
@@ -392,7 +390,7 @@ margin_top = 22.0
 custom_colors/font_color = Color( 0.784314, 0.827451, 0.866667, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 custom_fonts/font = SubResource( 78 )
-text = "Requires a folder containing a .ogv file (NOT .mp4!!!!)  "
+text = "Requires a folder containing a .ogv file, NOT .mp4.  "
 clip_text = true
 
 [node name="VulnusFile" type="ReferenceRect" parent="AddSong"]
@@ -1412,6 +1410,7 @@ align = 1
 valign = 1
 
 [node name="AssignVid" type="ReferenceRect" parent="AddSong"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 35.0
