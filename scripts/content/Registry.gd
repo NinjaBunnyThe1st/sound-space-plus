@@ -202,6 +202,6 @@ func get_item(value,searchType:int=Globals.SEARCH_ID,checkSubRegistries:bool=tru
 func search(value,searchType:int=Globals.SEARCH_ALLTEXT,checkSubRegistries:bool=true) -> Array:
 	match searchType:
 		Globals.SEARCH_ALLTEXT:
-			for _i in range(items.size()):
+			for i in range(items.size()):
 				pass
 	return []

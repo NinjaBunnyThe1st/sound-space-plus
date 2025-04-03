@@ -95,7 +95,7 @@ func load_buffer(bytes:PoolByteArray,loop:bool=false):
 #				print ("fmt OK at bytes " + str(i) + "-" + str(i+3))
 				
 				#get format subchunk size, 4 bytes next to "fmt " are an int32
-				var _formatsubchunksize = bytes[i+4] + (bytes[i+5] << 8) + (bytes[i+6] << 16) + (bytes[i+7] << 24)
+				var formatsubchunksize = bytes[i+4] + (bytes[i+5] << 8) + (bytes[i+6] << 16) + (bytes[i+7] << 24)
 #				print ("Format subchunk size: " + str(formatsubchunksize))
 				
 				#using formatsubchunk index so it's easier to understand what's going on
@@ -127,11 +127,11 @@ func load_buffer(bytes:PoolByteArray,loop:bool=false):
 				newstream.mix_rate = sample_rate
 				
 				#get byte_rate [Bytes 8-11] because we can
-				var _byte_rate = bytes[fsc0+8] + (bytes[fsc0+9] << 8) + (bytes[fsc0+10] << 16) + (bytes[fsc0+11] << 24)
+				var byte_rate = bytes[fsc0+8] + (bytes[fsc0+9] << 8) + (bytes[fsc0+10] << 16) + (bytes[fsc0+11] << 24)
 #				print ("Byte rate: " + str(byte_rate))
 				
 				#same with bits*sample*channel [Bytes 12-13]
-				var _bits_sample_channel = bytes[fsc0+12] + (bytes[fsc0+13] << 8)
+				var bits_sample_channel = bytes[fsc0+12] + (bytes[fsc0+13] << 8)
 #				print ("BitsPerSample * Channel / 8: " + str(bits_sample_channel))
 				
 				#aaaand bits per sample/bitrate [Bytes 14-15]
@@ -214,7 +214,7 @@ func convert_to_16bit(data: PoolByteArray, from: int) -> PoolByteArray:
 			data[j] = data[i+1]
 			data[j+1] = data[i+2]
 			j += 2
-		data.resize(data.size() * 2.0 / 3.0)
+		data.resize(data.size() * 2 / 3)
 	# 32 bit .wav's are typically stored as floating point numbers
 	# so we need to grab all 4 bytes and interpret them as a float first
 	if from == 32:
@@ -225,9 +225,9 @@ func convert_to_16bit(data: PoolByteArray, from: int) -> PoolByteArray:
 			spb.data_array = data.subarray(i, i+3)
 			single_float = spb.get_float()
 			value = single_float * 32768
-			data[i/2.0] = value
-			data[i/2.0+1.0] = value >> 8
-		data.resize(data.size() / 2.0)
+			data[i/2] = value
+			data[i/2+1] = value >> 8
+		data.resize(data.size() / 2)
 	print("Took %f seconds for slow conversion" % ((OS.get_ticks_msec() - time) / 1000.0))
 	return data
 
